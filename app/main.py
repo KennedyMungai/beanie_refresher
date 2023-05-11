@@ -2,9 +2,17 @@
 import uvicorn
 from fastapi import FastAPI
 from routers.tasks_router import tasks_router
+from database.database import init_db
 
 
 app = FastAPI()
+
+
+@app.on_event("startup")
+async def startup_event():
+    """Initializes the database"""
+    print("Initializing database...")
+    await init_db()
 
 
 @app.get("/", name="Home", description="The root endpoint for the application", tags=["Home"])
