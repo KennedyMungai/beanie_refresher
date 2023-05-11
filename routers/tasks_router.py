@@ -3,6 +3,8 @@ from typing import List
 
 from fastapi import APIRouter, HTTPException, status
 from pymongo.errors import ConnectionFailure
+from beanie import PydanticObjectId
+
 
 from models.tasks_model import Task
 
