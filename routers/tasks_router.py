@@ -89,7 +89,7 @@ async def update_task_router(_task_id: PydanticObjectId, _task: Task) -> Task:
     _single_task.task_content = _task.task_content
     _single_task.task_completed = _task.task_completed
 
-    _single_task.save()
+    await _single_task.save()
 
     return _single_task
 
@@ -115,6 +115,7 @@ async def delete_task_router(task_id: PydanticObjectId):
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail="Task not found")
 
-    _task_to_delete.delete()
+    await _task_to_delete.delete()
+    await _task_to_delete.save()
 
     return None
