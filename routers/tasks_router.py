@@ -4,6 +4,7 @@ from typing import List
 from beanie import PydanticObjectId
 from fastapi import APIRouter, HTTPException, status
 from pymongo.errors import ConnectionFailure
+from schemas.tasks_schemas import TaskUpdate
 
 from models.tasks_model import Task
 
