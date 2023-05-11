@@ -1,6 +1,7 @@
 """Created the entrypoint for the application"""
 import uvicorn
 from fastapi import FastAPI
+from routers.tasks_router import tasks_router
 
 
 app = FastAPI()
@@ -10,6 +11,9 @@ app = FastAPI()
 async def root():
     """The root endpoint for the application"""
     return {"message": "Hello World"}
+
+
+app.include_router(tasks_router)
 
 
 if __name__ == "__main__":
