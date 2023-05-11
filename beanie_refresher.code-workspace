@@ -6,7 +6,8 @@
 	],
 	"settings": {
 		"cSpell.words": [
-			"dotenv"
+			"dotenv",
+			"pymongo"
 		],
 		"[python]": {
 			"editor.defaultFormatter": "ms-python.autopep8"
