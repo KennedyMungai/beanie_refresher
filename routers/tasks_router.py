@@ -23,8 +23,19 @@ async def get_all_tasks_router() -> List[Task]:
 
 
 @tasks_router.get("/{task_id}")
-async def get_single_task_router(task_id: PydanticObjectId):
-    return {"task": task_id}
+async def get_single_task_router(task_id: PydanticObjectId) -> Task:
+    """Get a single task"""
+    try:
+        single_task = await Task.get(task_id)
+    except ConnectionFailure as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
+
+    if not single_task:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Task not found")
+
+    return single_task
 
 
 @tasks_router.post("/", name="Create Task", description="Creates Tasks", status_code=status.HTTP_201_CREATED)
