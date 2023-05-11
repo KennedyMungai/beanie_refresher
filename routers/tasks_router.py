@@ -14,7 +14,7 @@ tasks_router = APIRouter(prefix="/tasks", tags=["tasks"])
 async def get_all_tasks_router() -> List[Task]:
     """Get all tasks"""
     try:
-        tasks = await Task.find_all().to_list()
+        tasks = await Task.find().to_list()
     except ConnectionFailure as e:
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
