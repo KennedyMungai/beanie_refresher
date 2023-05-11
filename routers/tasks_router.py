@@ -1,5 +1,6 @@
 """The router file for tasks"""
 from fastapi import APIRouter
+from models.tasks_model import Task
 
 
 tasks_router = APIRouter(prefix="/tasks", tags=["tasks"])
