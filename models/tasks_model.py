@@ -11,6 +11,6 @@ class Task(Document):
     Args:
         Document (Beanie): The base document class
     """
-    task_content: str
+    task_content: str = Field(max_length=400)
     is_complete: bool
     date_created: datetime
