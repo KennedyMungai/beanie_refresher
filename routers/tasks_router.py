@@ -1,14 +1,17 @@
 """The router file for tasks"""
 from fastapi import APIRouter
 from models.tasks_model import Task
+from typing import List
 
 
 tasks_router = APIRouter(prefix="/tasks", tags=["tasks"])
 
 
 @tasks_router.get("/")
-async def get_all_tasks_router():
-    return {"tasks": []}
+async def get_all_tasks_router() -> List[Task]:
+    """Get all tasks"""
+    tasks = await Task.find_all().tolist()
+    return tasks
 
 
 @tasks_router.get("/{task_id}")
