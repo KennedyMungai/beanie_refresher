@@ -1,7 +1,8 @@
 """Will contain the db connection logic"""
 import motor
-from motor.motor_asyncio import AsyncIOMotorClient
 from beanie import init_beanie
+from motor.motor_asyncio import AsyncIOMotorClient
+
 from models.tasks_model import Task
 
 
