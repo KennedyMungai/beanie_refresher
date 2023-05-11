@@ -61,8 +61,36 @@ async def create_task_router(_task: Task) -> dict[str, str]:
 
 
 @tasks_router.put("/{task_id}")
-async def update_task_router(task_id: int):
-    return {"task": task_id}
+async def update_task_router(_task_id: PydanticObjectId, _task: Task) -> Task:
+    """The endpoint for updating tasks
+
+    Args:
+        _task_id (PydanticObjectId): The id of an individual task
+        _task (Task): The new task data
+
+    Raises:
+        HTTPException: Raised when a good connection to the database could not be established
+        HTTPException: Raised when the task cannot be found
+
+    Returns:
+        Task: The newly updated task
+    """
+    try:
+        _single_task = await Task.get(_task_id)
+    except ConnectionFailure as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
+
+    if not _single_task:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Task not found")
+
+    _single_task.task_content = _task.task_content
+    _single_task.task_completed = _task.task_completed
+
+    _single_task.save()
+
+    return _single_task
 
 
 @tasks_router.delete("/{task_id}")
