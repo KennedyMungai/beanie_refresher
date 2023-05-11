@@ -94,6 +94,27 @@ async def update_task_router(_task_id: PydanticObjectId, _task: Task) -> Task:
     return _single_task
 
 
-@tasks_router.delete("/{task_id}")
-async def delete_task_router(task_id: int):
-    return {"task": task_id}
+@tasks_router.delete("/{task_id}", status_code=status.HTTP_204_NO_CONTENT)
+async def delete_task_router(task_id: PydanticObjectId):
+    """The delete endpoint
+
+    Args:
+        task_id (PydanticObjectId): The id of the task
+
+    Raises:
+        HTTPException: The internal server error HTTPException
+        HTTPException: _description_
+    """
+    try:
+        _task_to_delete = await Task.get(task_id)
+    except ConnectionFailure as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
+
+    if _task_to_delete is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Task not found")
+
+    _task_to_delete.delete()
+
+    return None
