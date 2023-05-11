@@ -23,7 +23,7 @@ async def get_all_tasks_router() -> List[Task]:
 
 
 @tasks_router.get("/{task_id}")
-async def get_single_task_router(task_id: int):
+async def get_single_task_router(task_id: PydanticObjectId):
     return {"task": task_id}
 
 
