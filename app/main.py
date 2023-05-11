@@ -5,7 +5,7 @@ from routers.tasks_router import tasks_router
 from database.database import init_db
 
 
-app = FastAPI()
+app = FastAPI(title="Tasks CRUD Application")
 
 
 @app.on_event("startup")
