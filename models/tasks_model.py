@@ -1,6 +1,7 @@
 """The tasks model file"""
-from beanie import Document
 from datetime import datetime
+
+from beanie import Document
 from pydantic import Field
 
 
