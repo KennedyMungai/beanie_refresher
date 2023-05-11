@@ -1,10 +1,9 @@
 """The router file for tasks"""
 from typing import List
 
+from beanie import PydanticObjectId
 from fastapi import APIRouter, HTTPException, status
 from pymongo.errors import ConnectionFailure
-from beanie import PydanticObjectId
-
 
 from models.tasks_model import Task
 
