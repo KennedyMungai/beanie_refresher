@@ -8,7 +8,7 @@ tasks_router = APIRouter(prefix="/tasks", tags=["tasks"])
 
 
 @tasks_router.get("/")
-async def get_all_tasks_router():
+async def get_all_tasks_router() -> List[Task]:
     """Get all tasks"""
     try:
         tasks = await Task.find_all().to_list()
