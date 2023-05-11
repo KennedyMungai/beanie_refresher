@@ -1,5 +1,5 @@
 """The router file for tasks"""
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException, status
 from models.tasks_model import Task
 from typing import List
 
@@ -8,9 +8,15 @@ tasks_router = APIRouter(prefix="/tasks", tags=["tasks"])
 
 
 @tasks_router.get("/")
-async def get_all_tasks_router() -> List[Task]:
+async def get_all_tasks_router():
     """Get all tasks"""
-    tasks = await Task.find_all().tolist()
+    try:
+        tasks = Task.find_all()
+        tasks = tasks.tolist()
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
+
     return tasks
 
 
