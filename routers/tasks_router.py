@@ -2,6 +2,7 @@
 from fastapi import APIRouter, HTTPException, status
 from models.tasks_model import Task
 from typing import List
+from pymongo.errors import ConnectionFailure
 
 
 tasks_router = APIRouter(prefix="/tasks", tags=["tasks"])
@@ -12,7 +13,7 @@ async def get_all_tasks_router() -> List[Task]:
     """Get all tasks"""
     try:
         tasks = await Task.find_all().to_list()
-    except Exception as e:
+    except ConnectionFailure as e:
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
 
@@ -24,9 +25,26 @@ async def get_single_task_router(task_id: int):
     return {"task": task_id}
 
 
-@tasks_router.post("/")
-async def create_task_router():
-    return {"task": "created"}
+@tasks_router.post("/", name="Create Task", description="Creates Tasks", status_code=status.HTTP_201_CREATED)
+async def create_task_router(_task: Task) -> dict[str, str]:
+    """The endpoint to create tasks
+
+    Args:
+        _task (Task): The task object
+
+    Raises:
+        HTTPException: Raises an internal server error if there is any error
+
+    Returns:
+        dict[str, str]: A message to show that the task has been created
+    """
+    try:
+        await _task.create()
+    except ConnectionFailure as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
+
+    return {"message": "Task created successfully"}
 
 
 @tasks_router.put("/{task_id}")
