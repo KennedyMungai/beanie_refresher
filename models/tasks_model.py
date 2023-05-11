@@ -16,9 +16,11 @@ class Task(Document):
     date_created: datetime
 
     class Settings:
+        """Provides the name of the database collection"""
         name = "TasksDB"
 
     class Config:
+        """Shows a sample of how the data is formatted"""
         schema_extra = {
             "task_content": "This is a task",
             "is_complete": False,
