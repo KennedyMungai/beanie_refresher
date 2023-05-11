@@ -116,6 +116,5 @@ async def delete_task_router(task_id: PydanticObjectId):
             status_code=status.HTTP_404_NOT_FOUND, detail="Task not found")
 
     await _task_to_delete.delete()
-    await _task_to_delete.save()
 
     return None
