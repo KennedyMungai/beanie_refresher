@@ -1,10 +1,10 @@
 """Created the entrypoint for the application"""
 import uvicorn
 from fastapi import FastAPI
-from routers.tasks_router import tasks_router
-from database.database import init_db
 from fastapi.middleware.cors import CORSMiddleware
 
+from database.database import init_db
+from routers.tasks_router import tasks_router
 
 app = FastAPI(title="Tasks CRUD Application")
 
