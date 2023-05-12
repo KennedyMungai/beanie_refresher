@@ -8,6 +8,14 @@ from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI(title="Tasks CRUD Application")
 
+app.add_middleware(
+    CORSMiddleware,
+    allowed_domains=['http://localhost:3000'],
+    allow_credentials=True,
+    allow_methods=['*'],
+    allow_headers=['*']
+)
+
 
 @app.on_event("startup")
 async def startup_event():
