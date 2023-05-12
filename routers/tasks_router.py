@@ -111,7 +111,7 @@ async def delete_task_router(task_id: PydanticObjectId):
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
 
-    if _task_to_delete is None:
+    if _task_to_delete is None:     
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail="Task not found")
 
