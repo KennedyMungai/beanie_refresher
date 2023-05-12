@@ -8,12 +8,19 @@ from routers.tasks_router import tasks_router
 
 app = FastAPI(title="Tasks CRUD Application")
 
+origins = [
+    'http://localhost:3000',
+    'https://localhost:3000',
+    'http://localhost:3000/tasks',
+    'https://localhost:3000/tasks',
+]
+
 app.add_middleware(
     CORSMiddleware,
-    allowed_domains=['http://localhost:3000'],
+    allow_origins=origins,
     allow_credentials=True,
-    allow_methods=['*'],
-    allow_headers=['*']
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 
